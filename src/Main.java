@@ -1,50 +1,50 @@
-public class Restaurant {
-    private String name;
-    private int waitTime;
-    private double rating;
-    private double avgPrice;
-    private double distance;
-    private String hoursOpen;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
-    public Restaurant() {
+public class Main {
+    public static void main(String[] args) throws FileNotFoundException {
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        scanRestaurantsFile(restaurants);
+        printRandomRestaurant(restaurants);
     }
 
-    public Restaurant(String name, int waitTime, double rating, double avgPrice, double distance, String hoursOpen) {
-        this.name = name;
-        this.waitTime = waitTime;
-        this.rating = rating;
-        this.avgPrice = avgPrice;
-        this.distance = distance;
-        this.hoursOpen = hoursOpen;
+    public static void scanRestaurantsFile(ArrayList<Restaurant> restaurants) throws FileNotFoundException {
+        File file = new File("src/re.txt");
+        Scanner scan = new Scanner(file);
+
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine().trim();
+            if (line.isEmpty()) continue;
+
+            String[] parts = line.split(",");
+
+            String name      = parts[0].trim();
+            int waitTime     = Integer.parseInt(parts[1].trim());
+            double rating    = Double.parseDouble(parts[2].trim());
+            double avgPrice  = Double.parseDouble(parts[3].trim());
+            double distance  = Double.parseDouble(parts[4].trim());
+            String hoursOpen = parts[5].trim();
+
+            if (rating > 5) {
+                rating = -1;
+            }
+
+            restaurants.add(new Restaurant(name, waitTime, rating, avgPrice, distance, hoursOpen));
+        }
+        scan.close();
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public int getWaitTime() { return waitTime; }
-    public void setWaitTime(int waitTime) { this.waitTime = waitTime; }
-
-    public double getRating() { return rating; }
-    public void setRating(double rating) { this.rating = rating; }
-
-    public double getAvgPrice() { return avgPrice; }
-    public void setAvgPrice(double avgPrice) { this.avgPrice = avgPrice; }
-
-    public double getDistance() { return distance; }
-    public void setDistance(double distance) { this.distance = distance; }
-
-    public String getHoursOpen() { return hoursOpen; }
-    public void setHoursOpen(String hoursOpen) { this.hoursOpen = hoursOpen; }
-
-    public String toString() {
-        String col1 = "%-17s ";
-        String nameFormat   = String.format(col1 + "%-30s%n", "Name:", name);
-        String waitFormat   = String.format(col1 + "%-5d%n",  "Wait Time:", waitTime);
-        String ratingFormat = String.format(col1 + "%-5.2f%n","Rating:", rating);
-        String avgFormat    = String.format(col1 + "%-5.2f%n","Average Price:", avgPrice);
-        String distFormat   = String.format(col1 + "%-5.2f%n","Distance:", distance);
-        String hoursFormat  = String.format(col1 + "%-30s%n", "Open:", hoursOpen);
-
-        return nameFormat + waitFormat + ratingFormat + avgFormat + distFormat + hoursFormat;
+    /**
+     * chooses a random Restaurant from an ArrayList and outputs the Restaurant
+     * @param restaurants ArrayList of Restaurant
+     */
+    public static void printRandomRestaurant(ArrayList<Restaurant> restaurants) {
+        Random randy = new Random();
+        int numRestaurants = restaurants.size();
+        int randIndex = randy.nextInt(numRestaurants);
+        System.out.println(restaurants.get(randIndex));
     }
 }
