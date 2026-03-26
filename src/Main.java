@@ -1,27 +1,50 @@
-import javax.swing.JOptionPane;
-import java.util.ArrayList;
+public class Restaurant {
+    private String name;
+    private int waitTime;
+    private double rating;
+    private double avgPrice;
+    private double distance;
+    private String hoursOpen;
 
-public class Main {
-    static void main(String[] args) {
-        // Instantiate an ArrayList to hold Restaurant Object
-        ArrayList<Restaurant> restaurantsList = new ArrayList<>();
+    public Restaurant() {
+    }
 
-        // Take user input using JOptionPane and store in a variable
-        String restaurantName = JOptionPane.showInputDialog("Enter the Restaurant name, please:");
-        int waitTime = Integer.parseInt(JOptionPane.showInputDialog("How long was the Restaurants wait time in minutes Ex(30):"));
-        double rating = Double.parseDouble(JOptionPane.showInputDialog("What would you rate this Restaurant from 0.0 to 10.00"));
-        double avgPrice = Double.parseDouble(JOptionPane.showInputDialog("Enter average price of the restaurant Ex(12.50): "));
-        double distance = Double.parseDouble(JOptionPane.showInputDialog("Enter the distance the restaurant in Mile Ex(5.5): "));
-        String hoursOpen = JOptionPane.showInputDialog("Enter hours of operation: Ex(9:00am - 10:00pm");
+    public Restaurant(String name, int waitTime, double rating, double avgPrice, double distance, String hoursOpen) {
+        this.name = name;
+        this.waitTime = waitTime;
+        this.rating = rating;
+        this.avgPrice = avgPrice;
+        this.distance = distance;
+        this.hoursOpen = hoursOpen;
+    }
 
-        // Instantiate Restaurant object with those variables
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-        Restaurant userRestaurant = new Restaurant(restaurantName, waitTime, avgPrice, distance, hoursOpen);
-        System.out.println(userRestaurant.toString());
+    public int getWaitTime() { return waitTime; }
+    public void setWaitTime(int waitTime) { this.waitTime = waitTime; }
 
-        // Add user's restaurant object to the arraylist
-        restaurantsList.add(userRestaurant);
+    public double getRating() { return rating; }
+    public void setRating(double rating) { this.rating = rating; }
 
+    public double getAvgPrice() { return avgPrice; }
+    public void setAvgPrice(double avgPrice) { this.avgPrice = avgPrice; }
 
+    public double getDistance() { return distance; }
+    public void setDistance(double distance) { this.distance = distance; }
+
+    public String getHoursOpen() { return hoursOpen; }
+    public void setHoursOpen(String hoursOpen) { this.hoursOpen = hoursOpen; }
+
+    public String toString() {
+        String col1 = "%-17s ";
+        String nameFormat   = String.format(col1 + "%-30s%n", "Name:", name);
+        String waitFormat   = String.format(col1 + "%-5d%n",  "Wait Time:", waitTime);
+        String ratingFormat = String.format(col1 + "%-5.2f%n","Rating:", rating);
+        String avgFormat    = String.format(col1 + "%-5.2f%n","Average Price:", avgPrice);
+        String distFormat   = String.format(col1 + "%-5.2f%n","Distance:", distance);
+        String hoursFormat  = String.format(col1 + "%-30s%n", "Open:", hoursOpen);
+
+        return nameFormat + waitFormat + ratingFormat + avgFormat + distFormat + hoursFormat;
     }
 }
